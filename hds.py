@@ -80,7 +80,7 @@ class ImageProcess:
 
 if __name__ == '__main__':
     imageProcess = ImageProcess()
-    img1 = cv2.imread('zhl.jpg')
+    img1 = cv2.imread('3.jpg')
     # 缩放图片
     img1 = cv2.resize(img1, None, fx=0.2, fy=0.2)
     originImg1 = imageProcess.copyImg(img1)
