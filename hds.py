@@ -63,59 +63,68 @@ red_BGR = (27, 0, 217)  # 红色
 blue_white_BGR = (196, 146, 52)  # 蓝白渐变色
 light_gray_BGR = (210, 210, 210)  # 浅灰色
 
-uploaded_file = st.file_uploader("上传一张图片", type=("jpg", "png"))
+
+uploaded_file = st.file_uploader("选择你需要换底色的图片", type=("jpg", "png"))
 if uploaded_file is not None:
-    # 将传入的文件转为Opencv格式
+    #将传入的文件转为Opencv格式
     file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
     image_path = cv2.imdecode(file_bytes, 1)
-    # 展示图片
+    #展示图片
     st.image(image_path, channels="BGR")
     cv2.imwrite('test.jpg', image_path)
 # 读取原图像
 image = cv2.imread('test.jpg')
 
-new_background_color = blue_BGR  # 蓝色背景色
-# 使用多线程处理单张照片
-with concurrent.futures.ThreadPoolExecutor() as executor:
-    result = executor.submit(process_image, image, new_background_color)
-# 获取处理结果
-result = result.result()
-st.write("蓝色背景：")
-st.image(result, channels="BGR")
-
 new_background_color = white_BGR  # 白色背景色
 # 使用多线程处理单张照片
 with concurrent.futures.ThreadPoolExecutor() as executor:
     result = executor.submit(process_image, image, new_background_color)
-# 获取处理结果
-result = result.result()
-st.write("白色背景：")
-st.image(result, channels="BGR")
+if st.button('白底'):
+    # 获取处理结果
+    result = result.result()
+    st.write("白色背景：")
+    st.image(result, channels="BGR")
+
+new_background_color = blue_BGR  # 蓝色背景色
+# 使用多线程处理单张照片
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    result = executor.submit(process_image, image, new_background_color)
+if st.button('蓝底'):
+    # 获取处理结果
+    result = result.result()
+    st.write("蓝色背景：")
+    st.image(result, channels="BGR")
+
 
 new_background_color = red_BGR  # 红色背景色
 # 使用多线程处理单张照片
 with concurrent.futures.ThreadPoolExecutor() as executor:
     result = executor.submit(process_image, image, new_background_color)
-# 获取处理结果
-result = result.result()
-st.write("红色背景：")
-st.image(result, channels="BGR")
+if st.button('红底'):
+    # 获取处理结果
+    result = result.result()
+    st.write("红色背景：")
+    st.image(result, channels="BGR")
+
 
 new_background_color = blue_white_BGR  # 蓝白背景色
 # 使用多线程处理单张照片
 with concurrent.futures.ThreadPoolExecutor() as executor:
     result = executor.submit(process_image, image, new_background_color)
-# 获取处理结果
-result = result.result()
-st.write("蓝白色背景：")
-st.image(result, channels="BGR")
+if st.button('蓝白底'):
+    # 获取处理结果
+    result = result.result()
+    st.write("蓝白色背景：")
+    st.image(result, channels="BGR")
+
 
 new_background_color = light_gray_BGR  # 浅灰背景色
 # 使用多线程处理单张照片
 with concurrent.futures.ThreadPoolExecutor() as executor:
     result = executor.submit(process_image, image, new_background_color)
-# 获取处理结果
-result = result.result()
-st.write("灰白色背景：")
-st.image(result, channels="BGR")
-# cv2.waitKey(0)
+if st.button('灰白底'):
+    # 获取处理结果
+    result = result.result()
+    st.write("灰白色背景：")
+    st.image(result, channels="BGR")
+    # cv2.waitKey(0)
